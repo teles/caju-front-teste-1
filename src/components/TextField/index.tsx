@@ -1,5 +1,6 @@
-import React, { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, Ref } from "react";
 import styled from "styled-components";
+import MaskedInput from "react-text-mask";
 
 export const Input = styled.input`
   padding: 0 8px;
@@ -13,24 +14,35 @@ export const Input = styled.input`
   font-size: 16px;
   line-height: 18px;
   font-weight: normal;
-  border-radius:8px;
+  border-radius: 8px;
   :focus {
     outline: none;
     border: 1px solid #007c89;
     box-shadow: inset 0 0 0 1px #007c89;
   }
 `;
+
 type Props = {
   label?: string;
   error?: string;
-} & InputHTMLAttributes<any>;
+  mask?: (string | RegExp)[];
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const TextField = (props: Props) => {
+const TextField = ({ label, error, mask, ...props }: Props) => {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
-      <Input {...props} />
-      <span style={{fontSize: 12, color: 'red'}}>{props.error}</span>
+      <label htmlFor={props.id}>{label}</label>
+      {mask ? (
+        <MaskedInput
+          mask={mask}
+          render={(ref, props) => (
+            <Input ref={ref as Ref<HTMLInputElement>} {...props} />
+          )}
+        />
+      ) : (
+        <Input {...props} />
+      )}
+      <span style={{ fontSize: 12, color: "red" }}>{error}</span>
     </div>
   );
 };

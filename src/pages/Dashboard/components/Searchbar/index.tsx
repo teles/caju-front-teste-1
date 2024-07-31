@@ -13,9 +13,26 @@ export const SearchBar = () => {
     history.push(routes.newUser);
   };
 
+  const cpfMask = [
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+  ];
+
   return (
     <S.Container>
-      <TextField placeholder="Digite um CPF válido" />
+      <TextField mask={cpfMask} placeholder="Digite um CPF válido" />
       <S.Actions>
         <IconButton aria-label="refetch">
           <HiRefresh />
