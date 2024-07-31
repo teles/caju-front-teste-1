@@ -16,7 +16,8 @@ const allColumns: ColumnProps[] = [
 type Props = {
   registrations?: Registration[];
 };
-const Collumns = (props: Props) => {
+
+const Collumns = ({ registrations }: Props) => {
   return (
     <S.Container>
       {allColumns.map((collum) => {
@@ -27,14 +28,18 @@ const Collumns = (props: Props) => {
                 {collum.title}
               </S.TitleColumn>
               <S.CollumContent>
-                {props?.registrations?.map((registration) => {
-                  return (
-                    <RegistrationCard
-                      data={registration}
-                      key={registration.id}
-                    />
-                  );
-                })}
+                {registrations
+                  ?.filter(
+                    (registration) => collum.status === registration.status,
+                  )
+                  .map((registration) => {
+                    return (
+                      <RegistrationCard
+                        data={registration}
+                        key={registration.id}
+                      />
+                    );
+                  })}
               </S.CollumContent>
             </>
           </S.Column>
