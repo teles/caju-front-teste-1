@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { HiRefresh } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
-import { cpf as cpfValidator } from 'cpf-cnpj-validator';
+import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Button from "~/components/Buttons";
 import { IconButton } from "~/components/Buttons/IconButton";
 import TextField from "~/components/TextField";
@@ -36,10 +36,11 @@ export const SearchBar = () => {
 
   const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCpf(event.target.value);
-    if (cpfValidator.isValid(event.target.value)) {
-      setCpfError("");
-    } else {
-      setCpfError("CPF inválido");
+    const cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    const shouldTriggerValidation = cpfPattern.test(event.target.value);
+    if (shouldTriggerValidation) {
+      const isValid = cpfValidator.isValid(event.target.value);
+      setCpfError(isValid ? "" : "CPF inválido");
     }
   };
 
