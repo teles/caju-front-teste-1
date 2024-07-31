@@ -1,4 +1,5 @@
 import { ButtonSmall } from "~/components/Buttons";
+import { Registration } from "~/types/registration";
 import * as S from "./styles";
 import {
   HiOutlineMail,
@@ -8,29 +9,37 @@ import {
 } from "react-icons/hi";
 
 type Props = {
-  data: any;
+  data?: Registration;
+  isLoading?: boolean;
 };
 
-const RegistrationCard = (props: Props) => {
+const RegistrationCard = ({ data, isLoading = false }: Props) => {
   return (
     <S.Card>
       <S.IconAndText>
         <HiOutlineUser />
-        <h3>{props.data.employeeName}</h3>
+        {isLoading ? (
+          <S.Skeleton height="24px" />
+        ) : (
+          <h3>{data?.employeeName}</h3>
+        )}
       </S.IconAndText>
       <S.IconAndText>
         <HiOutlineMail />
-        <p>{props.data.email}</p>
+        {isLoading ? <S.Skeleton height="20px" /> : <span>{data?.email}</span>}
       </S.IconAndText>
       <S.IconAndText>
         <HiOutlineCalendar />
-        <span>{props.data.admissionDate}</span>
+        {isLoading ? (
+          <S.Skeleton height="20px" />
+        ) : (
+          <span>{data?.admissionDate}</span>
+        )}
       </S.IconAndText>
       <S.Actions>
-        <ButtonSmall bgcolor="rgb(255, 145, 154)" >Reprovar</ButtonSmall>
+        <ButtonSmall bgcolor="rgb(255, 145, 154)">Reprovar</ButtonSmall>
         <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
         <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
-
         <HiOutlineTrash />
       </S.Actions>
     </S.Card>

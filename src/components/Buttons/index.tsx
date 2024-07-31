@@ -19,16 +19,17 @@ const Button = styled.button`
 export const ButtonSmall = styled.button<{
   bgcolor?: string;
   color?: string;
+  isDisabled?: boolean;
 }>`
   font-size: 12px;
   outline: none;
   border-radius: 4px;
   border: none;
   padding: 4px 16px;
-  background-color: ${(props) => props.bgcolor ?? 'none'};
+  background-color: ${(props) => props.bgcolor ?? "none"};
   color: ${(props) => props.color ?? "#000"};
-  cursor: pointer;
+  cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
 `;
-
 
 export default Button;

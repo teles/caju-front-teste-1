@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const placeholderSkeleton = keyframes`
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+`;
 
 export const Card = styled.div`
   display: flex;
@@ -13,7 +22,9 @@ export const Card = styled.div`
   p {
     margin: 0;
   }
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
 `;
 
 export const IconAndText = styled.div`
@@ -31,5 +42,36 @@ export const Actions = styled.div`
 
   svg {
     cursor: pointer;
+  }
+`;
+
+export const Skeleton = styled.h3<{ height?: string }>`
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  ${({ height }) => height && `height: ${height};`}
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: ${placeholderSkeleton};
+  animation-timing-function: linear;
+  :after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
 `;

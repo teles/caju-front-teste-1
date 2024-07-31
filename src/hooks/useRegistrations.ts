@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Registration } from "~/types/registration";
 
@@ -25,6 +25,10 @@ const useRegistrations = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchRegistrations();
+  }, []);
 
   return {
     registrations,

@@ -15,9 +15,10 @@ const allColumns: ColumnProps[] = [
 
 type Props = {
   registrations?: Registration[];
+  loading?: boolean;
 };
 
-const Collumns = ({ registrations }: Props) => {
+const Collumns = ({ registrations, loading = false }: Props) => {
   return (
     <S.Container>
       {allColumns.map((collum) => {
@@ -28,18 +29,21 @@ const Collumns = ({ registrations }: Props) => {
                 {collum.title}
               </S.TitleColumn>
               <S.CollumContent>
-                {registrations
-                  ?.filter(
-                    (registration) => collum.status === registration.status,
-                  )
-                  .map((registration) => {
-                    return (
-                      <RegistrationCard
-                        data={registration}
-                        key={registration.id}
-                      />
-                    );
-                  })}
+                {loading === true && <RegistrationCard isLoading={loading} />}
+                {loading === false &&
+                  registrations?.length &&
+                  registrations
+                    ?.filter(
+                      (registration) => collum.status === registration.status,
+                    )
+                    .map((registration) => {
+                      return (
+                        <RegistrationCard
+                          data={registration}
+                          key={registration.id}
+                        />
+                      );
+                    })}
               </S.CollumContent>
             </>
           </S.Column>
