@@ -1,15 +1,20 @@
-
 import * as S from "./styles";
 import RegistrationCard from "../RegistrationCard";
+import { Registration, RegistrationStatus } from "~/types/registration";
 
-const allColumns = [
-  { status: 'REVIEW', title: "Pronto para revisar" },
-  { status: 'APPROVED', title: "Aprovado" },
-  { status: 'REPROVED', title: "Reprovado" },
+interface ColumnProps {
+  status: RegistrationStatus;
+  title: string;
+}
+
+const allColumns: ColumnProps[] = [
+  { status: RegistrationStatus.REVIEWING, title: "Pronto para revisar" },
+  { status: RegistrationStatus.APPROVED, title: "Aprovado" },
+  { status: RegistrationStatus.REPROVED, title: "Reprovado" },
 ];
 
 type Props = {
-  registrations?: any[];
+  registrations?: Registration[];
 };
 const Collumns = (props: Props) => {
   return (

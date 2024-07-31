@@ -1,20 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
-enum RegistrationStatus {
-  APROVED = "APROVED",
-  REVIEWING = "REVIEW",
-  REPROVED = "REPROVED",
-}
-
-export interface Registration {
-  id: string;
-  admissionDate: string;
-  email: string;
-  employeeName: string;
-  status: RegistrationStatus;
-  cpf: string;
-}
+import { Registration } from "~/types/registration";
 
 const useRegistrations = () => {
   const [registrations, setRegistrations] = useState<Registration[]>([]);

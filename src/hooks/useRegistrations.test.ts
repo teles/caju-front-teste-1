@@ -2,7 +2,8 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import useRegistrations, { Registration } from "./useRegistrations";
+import useRegistrations from "./useRegistrations";
+import { Registration } from "~/types/registration";
 
 const mock = new MockAdapter(axios);
 
@@ -12,7 +13,7 @@ const registrationsMock: Registration[] = [
     admissionDate: "2023-10-22",
     email: "luiz@caju.com.br",
     employeeName: "Luiz Filho",
-    status: "APROVED" as Registration["status"],
+    status: "APPROVED" as Registration["status"],
     cpf: "56642105087",
   },
   {
