@@ -26,12 +26,14 @@ const useRegistrations = () => {
     setLoading(true);
     try {
       const response: { data: Registration[] } = await axios.get(
-        `${apiUrl}/registrations`
+        `${apiUrl}/registrations`,
       );
       setRegistrations(response.data);
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to fetch registrations"
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch registrations",
       );
     } finally {
       setLoading(false);
