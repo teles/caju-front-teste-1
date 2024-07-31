@@ -35,14 +35,15 @@ const TextField = ({ label, error, mask, ...props }: Props) => {
       {mask ? (
         <MaskedInput
           mask={mask}
-          render={(ref, props) => (
-            <Input ref={ref as Ref<HTMLInputElement>} {...props} />
+          {...props}
+          render={(ref, inputProps) => (
+            <Input ref={ref as Ref<HTMLInputElement>} {...inputProps} />
           )}
         />
       ) : (
         <Input {...props} />
       )}
-      <span style={{ fontSize: 12, color: "red" }}>{error}</span>
+      {error && <span style={{ fontSize: 12, color: "red" }}>{error}</span>}
     </div>
   );
 };
