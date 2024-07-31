@@ -1,4 +1,3 @@
-// src/hooks/useRegistrations.test.ts
 import { renderHook, act } from "@testing-library/react-hooks";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
