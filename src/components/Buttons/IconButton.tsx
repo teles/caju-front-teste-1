@@ -20,9 +20,5 @@ type IconButtonProps = {
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 export const IconButton = (props: IconButtonProps) => {
-  return (
-    <_IconButtonStyled {...props}>
-      {props.children}
-    </_IconButtonStyled>
-  );
+  return <_IconButtonStyled {...props}>{props.children}</_IconButtonStyled>;
 };
