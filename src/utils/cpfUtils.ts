@@ -14,11 +14,10 @@ const isValidCpf = (cpf: string): boolean => {
 
 /**
  * Valida a mudança de um campo de entrada de CPF.
- * @param event - O evento de mudança do campo de entrada.
+ * @param value: O valor do campo de entrada.
  * @returns Um objeto contendo o valor do CPF e uma mensagem de erro, se houver.
  */
-export const validateCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
-  const value = event.target.value;
+export const validateCpfChange = (value: string) => {
   const cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
   const shouldTriggerValidation = cpfPattern.test(value);
   const isValid = shouldTriggerValidation && isValidCpf(value);

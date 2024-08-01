@@ -16,6 +16,7 @@
     "@types/react-text-mask": "^5.4.14",
     "axios": "^1.7.2",
     "cpf-cnpj-validator": "^1.0.3",
+    "formik": "^2.4.6",
     "json-server": "^1.0.0-beta.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,7 +24,8 @@
     "react-router-dom": "5.1.2",
     "react-text-mask": "^5.5.0",
     "styled-components": "^6.1.11",
-    "text-mask-addons": "^3.8.0"
+    "text-mask-addons": "^3.8.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "^2.0.4",

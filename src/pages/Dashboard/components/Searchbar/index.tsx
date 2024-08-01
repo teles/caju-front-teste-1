@@ -18,7 +18,7 @@ export const SearchBar = () => {
   };
 
   const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value, error } = validateCpfChange(event);
+    const { value, error } = validateCpfChange(event.target.value);
     setCpf(value);
     setCpfError(error);
   };
