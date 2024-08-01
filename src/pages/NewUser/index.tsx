@@ -70,6 +70,7 @@ const NewUserPage = () => {
         <TextField
           placeholder="Nome"
           label="Nome"
+          value={name}
           onBlur={handleNameBlur}
           onChange={handleNameChange}
           error={nameError}
