@@ -28,11 +28,12 @@ const useRegistrations = () => {
 
   const searchByCpf = async (cpf: string) => {
     setLoading(true);
+    const url = `${apiUrl}/registrations?cpf=${cpf}`;
     try {
-      const response: { data: Registration[] } = await axios.get(
-        `${apiUrl}/registrations?cpf=${cpf}`,
-      );
+      const response: { data: Registration[] } =
+        await axios.get<Registration[]>(url);
       setRegistrations(response.data);
+      setError(null);
     } catch (error) {
       setError(
         error instanceof Error
