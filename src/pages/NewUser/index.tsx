@@ -12,11 +12,25 @@ const NewUserPage = () => {
   const history = useHistory();
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, error } = validateCpfChange(event);
     setCpf(value);
     setCpfError(error);
+  };
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleEmailBlur = (event: ChangeEvent<HTMLInputElement>) => {
+    // regex adaptada de https://pt.stackoverflow.com/a/1389
+    const emailPattern = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    const { value } = event.target;
+    const isValid = emailPattern.test(value);
+    setEmailError(isValid ? "" : "Email inválido");
   };
 
   const goToHome = () => {
@@ -30,7 +44,15 @@ const NewUserPage = () => {
           <HiOutlineArrowLeft size={24} />
         </IconButton>
         <TextField placeholder="Nome" label="Nome" />
-        <TextField placeholder="Email" label="Email" type="email" />
+        <TextField
+          placeholder="Email"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+          onBlur={handleEmailBlur}
+          error={emailError}
+        />
         <TextField
           placeholder="CPF"
           mask={cpfMask}
