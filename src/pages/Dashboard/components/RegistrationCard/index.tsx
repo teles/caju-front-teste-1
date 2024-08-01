@@ -1,5 +1,5 @@
 import { ButtonSmall } from "~/components/Buttons";
-import { Registration } from "~/types/registration";
+import { Registration, RegistrationStatus } from "~/types/registration";
 import * as S from "./styles";
 import {
   HiOutlineMail,
@@ -37,9 +37,16 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
         )}
       </S.IconAndText>
       <S.Actions>
-        <ButtonSmall bgcolor="rgb(255, 145, 154)">Reprovar</ButtonSmall>
-        <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
-        <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+        {data?.status === RegistrationStatus.REVIEWING ? (
+          <>
+            <ButtonSmall bgcolor="rgb(255, 145, 154)">
+              Reprovar {data?.status}
+            </ButtonSmall>
+            <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
+          </>
+        ) : (
+          <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+        )}
         <HiOutlineTrash />
       </S.Actions>
     </S.Card>
