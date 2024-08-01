@@ -14,6 +14,8 @@ const NewUserPage = () => {
   const [cpfError, setCpfError] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
 
   const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, error } = validateCpfChange(event);
@@ -33,6 +35,28 @@ const NewUserPage = () => {
     setEmailError(isValid ? "" : "Email inválido");
   };
 
+  const handleNameBlur = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    const hasAtLeastTwoLetters = /[a-zA-Z].*[a-zA-Z]/.test(value);
+    const hasSpace = /\s/.test(value);
+    const startsWithNumber = /^\d/.test(value);
+
+    if (!hasAtLeastTwoLetters) {
+      setNameError("O nome deve conter pelo menos duas letras.");
+    } else if (!hasSpace) {
+      setNameError("O nome deve conter pelo menos um espaço.");
+    } else if (startsWithNumber) {
+      setNameError("O nome não pode começar com um número.");
+    } else {
+      setNameError("");
+    }
+  };
+
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>): void {
+    setName(event.target.value);
+  }
+
   const goToHome = () => {
     history.push(routes.dashboard);
   };
@@ -43,7 +67,13 @@ const NewUserPage = () => {
         <IconButton onClick={() => goToHome()} aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
-        <TextField placeholder="Nome" label="Nome" />
+        <TextField
+          placeholder="Nome"
+          label="Nome"
+          onBlur={handleNameBlur}
+          onChange={handleNameChange}
+          error={nameError}
+        />
         <TextField
           placeholder="Email"
           label="Email"
