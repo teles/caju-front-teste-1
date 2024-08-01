@@ -2,6 +2,15 @@ import { InputHTMLAttributes, Ref } from "react";
 import styled from "styled-components";
 import MaskedInput from "react-text-mask";
 
+const InputDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  margin-bottom: 8px;
+`;
+
 export const Input = styled.input`
   padding: 0 8px;
   vertical-align: middle;
@@ -22,6 +31,12 @@ export const Input = styled.input`
   }
 `;
 
+const ErrorSpan = styled.span`
+  margin-top: 8px;
+  font-size: 12px;
+  color: red;
+`;
+
 type Props = {
   label?: string;
   error?: string;
@@ -30,8 +45,8 @@ type Props = {
 
 const TextField = ({ label, error, mask, ...props }: Props) => {
   return (
-    <div>
-      <label htmlFor={props.id}>{label}</label>
+    <InputDiv>
+      <Label htmlFor={props.id}>{label}</Label>
       {mask ? (
         <MaskedInput
           mask={mask}
@@ -43,8 +58,8 @@ const TextField = ({ label, error, mask, ...props }: Props) => {
       ) : (
         <Input {...props} />
       )}
-      {error && <span style={{ fontSize: 12, color: "red" }}>{error}</span>}
-    </div>
+      {error && <ErrorSpan>{error}</ErrorSpan>}
+    </InputDiv>
   );
 };
 
