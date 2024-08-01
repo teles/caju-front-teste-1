@@ -37,7 +37,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
         )}
       </S.IconAndText>
       <S.Actions>
-        {data?.status === RegistrationStatus.REVIEWING ? (
+        {data?.status === RegistrationStatus.REVIEW ? (
           <>
             <ButtonSmall bgcolor="rgb(255, 145, 154)">
               Reprovar {data?.status}

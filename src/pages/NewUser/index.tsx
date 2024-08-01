@@ -8,9 +8,12 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { useHistory } from "react-router-dom";
 import routes from "~/router/routes";
 import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
+import { RegistrationStatus } from "~/types/registration";
+import useRegistrations from "~/hooks/useRegistrations";
 
 const NewUserPage = () => {
   const history = useHistory();
+  const { addRegistration } = useRegistrations();
 
   const goToHome = () => {
     history.push(routes.dashboard);
@@ -44,8 +47,17 @@ const NewUserPage = () => {
         .required("CPF é obrigatório"),
       admissionDate: Yup.date().required("Data de admissão é obrigatória"),
     }),
-    onSubmit: (values) => {
-      console.log("Form values:", values);
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      await addRegistration({
+        employeeName: values.name,
+        email: values.email,
+        cpf: values.cpf,
+        admissionDate: values.admissionDate,
+        status: RegistrationStatus.REVIEW,
+      });
+      setSubmitting(false);
+      resetForm();
+      history.push(routes.dashboard);
     },
   });
 
@@ -108,7 +120,9 @@ const NewUserPage = () => {
                 : ""
             }
           />
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit" disabled={formik.isSubmitting}>
+            Cadastrar
+          </Button>
         </form>
       </S.Card>
     </S.Container>

@@ -8,7 +8,7 @@ interface ColumnProps {
 }
 
 const allColumns: ColumnProps[] = [
-  { status: RegistrationStatus.REVIEWING, title: "Pronto para revisar" },
+  { status: RegistrationStatus.REVIEW, title: "Pronto para revisar" },
   { status: RegistrationStatus.APPROVED, title: "Aprovado" },
   { status: RegistrationStatus.REPROVED, title: "Reprovado" },
 ];

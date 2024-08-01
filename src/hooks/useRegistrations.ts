@@ -26,6 +26,20 @@ const useRegistrations = () => {
     }
   };
 
+  const addRegistration = async (newRegistration: Omit<Registration, "id">) => {
+    setLoading(true);
+    try {
+      await axios.post(`${apiUrl}/registrations`, newRegistration);
+      await fetchRegistrations();
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to add registration",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchRegistrations();
   }, []);
@@ -35,6 +49,7 @@ const useRegistrations = () => {
     loading,
     error,
     fetchRegistrations,
+    addRegistration,
   };
 };
 
