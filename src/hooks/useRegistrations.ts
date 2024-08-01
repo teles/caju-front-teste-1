@@ -26,6 +26,24 @@ const useRegistrations = () => {
     }
   };
 
+  const searchByCpf = async (cpf: string) => {
+    setLoading(true);
+    try {
+      const response: { data: Registration[] } = await axios.get(
+        `${apiUrl}/registrations?cpf=${cpf}`,
+      );
+      setRegistrations(response.data);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch registrations",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const addRegistration = async (newRegistration: Omit<Registration, "id">) => {
     setLoading(true);
     try {
@@ -50,6 +68,7 @@ const useRegistrations = () => {
     error,
     fetchRegistrations,
     addRegistration,
+    searchByCpf,
   };
 };
 
