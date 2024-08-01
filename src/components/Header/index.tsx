@@ -14,6 +14,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   padding: 0px 24px;
+  z-index: 20;
 
   h1 {
     color: #fff;
