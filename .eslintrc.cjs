@@ -21,7 +21,6 @@ module.exports = {
     },
   },
   rules: {
-    "@typescript-eslint/no-explicit-any": "off",
     "react/react-in-jsx-scope": "off",
     "import/no-named-as-default": 0,
     "import/no-unresolved": ["error", { ignore: ["^~/"] }],
