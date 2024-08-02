@@ -6,13 +6,13 @@ export default {
   title: "Componentes/ConfirmationModal",
   component: ConfirmationModal,
   argTypes: {
-    isOpen: { control: 'boolean' },
-    title: { control: 'text' },
-    text: { control: 'text' },
-    confirmText: { control: 'text' },
-    cancelText: { control: 'text' },
-    onConfirm: { action: 'confirmado' },
-    onRequestClose: { action: 'fechado' },
+    isOpen: { control: "boolean" },
+    title: { control: "text" },
+    text: { control: "text" },
+    confirmText: { control: "text" },
+    cancelText: { control: "text" },
+    onConfirm: { action: "confirmado" },
+    onRequestClose: { action: "fechado" },
   },
 } as Meta<ConfirmationModalProps>;
 
