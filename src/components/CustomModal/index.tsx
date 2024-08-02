@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { HiOutlineX } from "react-icons/hi";
 
-const customStyles = {
+const customStyles: Modal.Styles = {
   content: {
     top: "50%",
     left: "50%",
@@ -15,10 +15,11 @@ const customStyles = {
     padding: 0,
     border: "none",
     borderRadius: "8px",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24)",
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 30,
   },
 };
 
