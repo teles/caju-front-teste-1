@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import RegistrationCard from "../RegistrationCard";
+import { LoadingDots } from "~/components/LoadingDots";
 import { Registration, RegistrationStatus } from "~/types/registration";
 
 interface ColumnProps {
@@ -27,6 +28,7 @@ const Collumns = ({ registrations, loading = false }: Props) => {
             <>
               <S.TitleColumn status={collum.status}>
                 {collum.title}
+                {loading && <LoadingDots />}
               </S.TitleColumn>
               <S.CollumContent>
                 {loading === true && <RegistrationCard isLoading={loading} />}
