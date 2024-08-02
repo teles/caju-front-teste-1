@@ -17,6 +17,7 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 100%;
 
   ${_IconButtonStyled} {
     margin-bottom: 8px;
