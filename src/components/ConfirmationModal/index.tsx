@@ -32,6 +32,20 @@ type Props = Omit<CustomModalProps, "children"> & {
   cancelText?: string;
 };
 
+/**
+ * O componente ConfirmationModal exibe uma caixa de diálogo modal com uma mensagem de confirmação e botões para confirmar ou cancelar a ação.
+ *
+ * @component
+ * @param {Props} props - As propriedades do componente.
+ * @param {boolean} props.isOpen - Determina se o modal está aberto ou fechado.
+ * @param {() => void} props.onRequestClose - Função de callback para lidar com a solicitação de fechamento do modal.
+ * @param {() => void} props.onConfirm - Função de callback para lidar com a ação de confirmação.
+ * @param {string} props.title - O título do modal.
+ * @param {string} props.text - O conteúdo de texto do modal.
+ * @param {string} [props.confirmText="Confirmar"] - O texto a ser exibido no botão de confirmação.
+ * @param {string} [props.cancelText="Cancelar"] - O texto a ser exibido no botão de cancelamento.
+ * @returns {JSX.Element} O componente ConfirmationModal renderizado.
+ */
 const ConfirmationModal = ({
   isOpen,
   onRequestClose,
