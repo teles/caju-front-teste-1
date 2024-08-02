@@ -24,7 +24,7 @@ const ModalText = styled.p`
   margin-bottom: 16px;
 `;
 
-type Props = Omit<CustomModalProps, "children"> & {
+export type ConfirmationModalProps = Omit<CustomModalProps, "children"> & {
   title: string;
   text: string;
   onConfirm: () => void;
@@ -36,7 +36,7 @@ type Props = Omit<CustomModalProps, "children"> & {
  * O componente ConfirmationModal exibe uma caixa de diálogo modal com uma mensagem de confirmação e botões para confirmar ou cancelar a ação.
  *
  * @component
- * @param {Props} props - As propriedades do componente.
+ * @param {ConfirmationModalProps} props - As propriedades do componente.
  * @param {boolean} props.isOpen - Determina se o modal está aberto ou fechado.
  * @param {() => void} props.onRequestClose - Função de callback para lidar com a solicitação de fechamento do modal.
  * @param {() => void} props.onConfirm - Função de callback para lidar com a ação de confirmação.
@@ -54,7 +54,7 @@ const ConfirmationModal = ({
   text,
   confirmText = "Confirmar",
   cancelText = "Cancelar",
-}: Props) => {
+}: ConfirmationModalProps) => {
   return (
     <CustomModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <ModalContent>
