@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { cpf as cpfValidator } from "cpf-cnpj-validator";
 
 /**
