@@ -163,6 +163,7 @@ describe("useRegistrations", () => {
     expect(result.current.error).toBe(errorMessage);
     expect(result.current.registrations).toEqual([]);
   });
+
   it("should update a registration successfully", async () => {
     const updatedFields = { status: RegistrationStatus.REPROVED };
     const updatedRegistration = { ...registrationsMock[0], ...updatedFields };
@@ -210,5 +211,48 @@ describe("useRegistrations", () => {
     // TODO: Fix this test
     expect(result.current.loading).toBe(false);
     // expect(result.current.error).toBe("Request failed with status code 500");
+  });
+
+  it("should delete a registration successfully", async () => {
+    const idToDelete = registrationsMock[0].id;
+
+    mock
+      .onDelete(`http://localhost:3000/registrations/${idToDelete}`)
+      .reply(200);
+
+    mock
+      .onGet("http://localhost:3000/registrations")
+      .reply(200, registrationsMock.slice(1));
+
+    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+
+    act(() => {
+      result.current.deleteRegistration(idToDelete);
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBeNull();
+    expect(result.current.registrations).toEqual([registrationsMock[1]]);
+  });
+
+  it("should handle delete registration error", async () => {
+    const idToDelete = registrationsMock[0].id;
+
+    mock
+      .onDelete(`http://localhost:3000/registrations/${idToDelete}`)
+      .reply(500);
+
+    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+
+    act(() => {
+      result.current.deleteRegistration(idToDelete);
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBe("Request failed with status code 500");
   });
 });

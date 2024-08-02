@@ -1,4 +1,8 @@
 import styled, { keyframes } from "styled-components";
+import {
+  registrationStatusStyles,
+  RegistrationStatus,
+} from "~/types/registration";
 
 const placeholderSkeleton = keyframes`
   0% {
@@ -25,6 +29,22 @@ export const Card = styled.div`
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.24);
+`;
+
+export const CardEmptyMessage = styled.div<{
+  status: RegistrationStatus;
+}>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: ${({ status }) => registrationStatusStyles[status].title};
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  p {
+    text-align: center;
+    font-size: 0.875rem;
+  }
 `;
 
 export const IconAndText = styled.div`

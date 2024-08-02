@@ -85,6 +85,22 @@ const useRegistrations = () => {
     }
   };
 
+  const deleteRegistration = async (id: string) => {
+    setLoading(true);
+    try {
+      await axios.delete(`${apiUrl}/registrations/${id}`);
+      await fetchRegistrations();
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to delete registration",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchRegistrations();
   }, []);
@@ -97,6 +113,7 @@ const useRegistrations = () => {
     addRegistration,
     updateRegistration,
     searchByCpf,
+    deleteRegistration,
   };
 };
 

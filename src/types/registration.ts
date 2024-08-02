@@ -12,3 +12,20 @@ export interface Registration {
   status: RegistrationStatus;
   cpf: string;
 }
+
+export const registrationStatusStyles: {
+  [key in RegistrationStatus]: { background: string; title: string };
+} = {
+  REVIEW: {
+    background: "#fdf8e9",
+    title: "#efc24d",
+  },
+  APPROVED: {
+    background: "#eeeefd",
+    title: "#4242df",
+  },
+  REPROVED: {
+    background: "#fbedf6",
+    title: "#ce2893",
+  },
+};

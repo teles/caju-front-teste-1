@@ -1,5 +1,7 @@
 import * as S from "./styles";
-import RegistrationCard from "../RegistrationCard";
+import RegistrationCard, {
+  EmptyStateRegistrationCard,
+} from "../RegistrationCard";
 import { LoadingDots } from "~/components/LoadingDots";
 import { Registration, RegistrationStatus } from "~/types/registration";
 
@@ -13,6 +15,12 @@ const allColumns: ColumnProps[] = [
   { status: RegistrationStatus.APPROVED, title: "Aprovado" },
   { status: RegistrationStatus.REPROVED, title: "Reprovado" },
 ];
+
+const filterByStatus = (status: RegistrationStatus) => {
+  return (registration: Registration) => {
+    return registration.status === status;
+  };
+};
 
 type Props = {
   registrations?: Registration[];
@@ -33,11 +41,13 @@ const Collumns = ({ registrations, loading = false }: Props) => {
               <S.CollumContent>
                 {loading === true && <RegistrationCard isLoading={loading} />}
                 {loading === false &&
-                  registrations?.length &&
+                  registrations?.filter(filterByStatus(collum.status))
+                    .length === 0 && (
+                    <EmptyStateRegistrationCard status={collum.status} />
+                  )}
+                {loading === false &&
                   registrations
-                    ?.filter(
-                      (registration) => collum.status === registration.status,
-                    )
+                    ?.filter(filterByStatus(collum.status))
                     .map((registration) => {
                       return (
                         <RegistrationCard

@@ -1,22 +1,8 @@
 import styled from "styled-components";
-import { RegistrationStatus } from "~/types/registration";
-
-const registrationStatusStyles: {
-  [key in RegistrationStatus]: { background: string; title: string };
-} = {
-  REVIEW: {
-    background: "#FDF8E9",
-    title: "#EFC24D",
-  },
-  APPROVED: {
-    background: "#EEEEFD",
-    title: "#4242DF",
-  },
-  REPROVED: {
-    background: "#FBEDF6",
-    title: "#CE2893",
-  },
-};
+import {
+  RegistrationStatus,
+  registrationStatusStyles,
+} from "~/types/registration";
 
 export const Container = styled.div`
   display: grid;
