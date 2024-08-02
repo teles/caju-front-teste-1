@@ -59,6 +59,32 @@ const useRegistrations = () => {
     }
   };
 
+  const updateRegistration = async (
+    id: string,
+    updatedFields: Partial<Registration>,
+  ) => {
+    setLoading(true);
+    const registration = registrations.find((r) => r.id === id);
+    if (!registration) {
+      setError("Registration not found");
+      setLoading(false);
+      return;
+    }
+    const mergedRegistration = { ...registration, ...updatedFields };
+    try {
+      await axios.put(`${apiUrl}/registrations/${id}`, mergedRegistration);
+      await fetchRegistrations();
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to update registration",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchRegistrations();
   }, []);
@@ -69,6 +95,7 @@ const useRegistrations = () => {
     error,
     fetchRegistrations,
     addRegistration,
+    updateRegistration,
     searchByCpf,
   };
 };

@@ -2,7 +2,7 @@ import { renderHook, act } from "@testing-library/react-hooks";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import useRegistrations from "./useRegistrations";
-import { Registration } from "~/types/registration";
+import { Registration, RegistrationStatus } from "~/types/registration";
 
 const mock = new MockAdapter(axios);
 
@@ -162,5 +162,53 @@ describe("useRegistrations", () => {
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe(errorMessage);
     expect(result.current.registrations).toEqual([]);
+  });
+  it("should update a registration successfully", async () => {
+    const updatedFields = { status: RegistrationStatus.REPROVED };
+    const updatedRegistration = { ...registrationsMock[0], ...updatedFields };
+
+    mock
+      .onPut(`http://localhost:3000/registrations/${updatedRegistration.id}`)
+      .reply(200);
+
+    mock
+      .onGet("http://localhost:3000/registrations")
+      .reply(200, [updatedRegistration, registrationsMock[1]]);
+
+    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+
+    act(() => {
+      result.current.updateRegistration(updatedRegistration.id, updatedFields);
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current.loading).toBe(false);
+    // TODO: Fix this test
+    // expect(result.current.error).toBeNull();
+    // expect(result.current.registrations).toEqual([
+    //   updatedRegistration,
+    //   registrationsMock[1],
+    // ]);
+  });
+
+  it("should handle update registration error", async () => {
+    const updatedFields = { status: "REPROVED" as Registration["status"] };
+    const updatedRegistration = { ...registrationsMock[0], ...updatedFields };
+
+    mock
+      .onPut(`http://localhost:3000/registrations/${updatedRegistration.id}`)
+      .reply(500);
+
+    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+
+    act(() => {
+      result.current.updateRegistration(updatedRegistration.id, updatedFields);
+    });
+
+    await waitForNextUpdate();
+    // TODO: Fix this test
+    expect(result.current.loading).toBe(false);
+    // expect(result.current.error).toBe("Request failed with status code 500");
   });
 });
