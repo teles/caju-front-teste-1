@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import TextField from "~/components/TextField";
@@ -10,10 +11,12 @@ import routes from "~/router/routes";
 import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
 import { RegistrationStatus } from "~/types/registration";
 import useRegistrations from "~/hooks/useRegistrations";
+import ConfirmationModal from "~/components/ConfirmationModal";
 
 const NewUserPage = () => {
   const history = useHistory();
   const { addRegistration } = useRegistrations();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const goToHome = () => {
     history.push(routes.dashboard);
@@ -61,13 +64,37 @@ const NewUserPage = () => {
     },
   });
 
+  const handleOpenModal = async () => {
+    const errors = await formik.validateForm();
+    if (!Object.keys(errors).length) {
+      setIsModalOpen(true);
+    } else {
+      formik.setTouched({
+        name: true,
+        email: true,
+        cpf: true,
+        admissionDate: true,
+      });
+    }
+  };
+
+  const handleConfirmSubmit = () => {
+    setIsModalOpen(false);
+    formik.handleSubmit();
+  };
+
   return (
     <S.Container>
       <S.Card>
         <IconButton onClick={() => goToHome()} aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
-        <form onSubmit={formik.handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleOpenModal();
+          }}
+        >
           <TextField
             placeholder="Nome"
             label="Nome"
@@ -125,6 +152,13 @@ const NewUserPage = () => {
           </Button>
         </form>
       </S.Card>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        title="Confirmar Cadastro"
+        text={`Tem certeza que deseja cadastrar ${formik.values.name}?`}
+        onConfirm={handleConfirmSubmit}
+      />
     </S.Container>
   );
 };
