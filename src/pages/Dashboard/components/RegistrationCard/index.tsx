@@ -76,12 +76,48 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
               >
                 Reprovar {data?.status}
               </ButtonSmall>
-              <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
+              <ButtonSmall
+                bgcolor="rgb(155, 229, 155)"
+                onClick={() =>
+                  openModal({
+                    title: "Aprovar Review",
+                    text: `Tem certeza que deseja aprovar o review de ${data?.employeeName}?`,
+                    onConfirm: () => {},
+                    confirmText: "Sim, aprovar",
+                    cancelText: "Não, cancelar",
+                  })
+                }
+              >
+                Aprovar
+              </ButtonSmall>
             </>
           ) : (
-            <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+            <ButtonSmall
+              bgcolor="#ff8858"
+              onClick={() => {
+                openModal({
+                  title: "Revisar novamente",
+                  text: `Tem certeza que deseja revisar novamente o review de ${data?.employeeName}?`,
+                  onConfirm: () => {},
+                  confirmText: "Sim, revisar",
+                  cancelText: "Não, cancelar",
+                });
+              }}
+            >
+              Revisar novamente
+            </ButtonSmall>
           )}
-          <HiOutlineTrash />
+          <HiOutlineTrash
+            onClick={() => {
+              openModal({
+                title: "Excluir",
+                text: `Tem certeza que deseja excluir o registro de ${data?.employeeName}?`,
+                onConfirm: () => {},
+                confirmText: "Sim, excluir",
+                cancelText: "Não, cancelar",
+              });
+            }}
+          />
         </S.Actions>
       </S.Card>
       {modalContent && (
