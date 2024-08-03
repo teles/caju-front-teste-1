@@ -9,6 +9,13 @@ const useRegistrations = () => {
   const [error, setError] = useState<string | null>(null);
   const apiUrl = "http://localhost:3000";
 
+  /**
+   * Função assíncrona que busca as inscrições.
+   *
+   * @returns Uma promessa que resolve em um objeto do tipo ActionResponse.
+   * A promessa é resolvida com sucesso se as inscrições forem carregadas com sucesso,
+   * caso contrário, a promessa é rejeitada com um objeto do tipo ActionResponse indicando a falha.
+   */
   const fetchRegistrations = useCallback(async (): Promise<ActionResponse> => {
     setLoading(true);
     try {
@@ -35,6 +42,12 @@ const useRegistrations = () => {
     }
   }, []);
 
+  /**
+   * Busca registros por CPF.
+   *
+   * @param cpf - O CPF a ser utilizado como filtro.
+   * @returns Uma promessa que resolve em um objeto de resposta contendo o sucesso da operação e uma mensagem.
+   */
   const fetchByCpf = async (cpf: string): Promise<ActionResponse> => {
     setLoading(true);
     const url = `${apiUrl}/registrations?cpf=${cpf}`;
@@ -62,6 +75,12 @@ const useRegistrations = () => {
     }
   };
 
+  /**
+   * Adiciona um novo cadastro.
+   *
+   * @param newRegistration - O novo cadastro a ser adicionado.
+   * @returns Uma promessa que resolve em um objeto contendo informações sobre o resultado da operação.
+   */
   const addRegistration = async (
     newRegistration: Omit<Registration, "id">,
   ): Promise<ActionResponse> => {
@@ -86,6 +105,15 @@ const useRegistrations = () => {
     }
   };
 
+  /**
+   * Atualiza um registro de inscrição.
+   *
+   * @param id - O ID do registro de inscrição a ser atualizado.
+   * @param updatedFields - Os campos atualizados do registro de inscrição.
+   * @returns Uma promessa que resolve em um objeto de resposta de ação.
+   *          - success: Um valor booleano indicando se a atualização foi bem-sucedida.
+   *          - message: Uma mensagem descrevendo o resultado da atualização.
+   */
   const updateRegistration = async (
     id: string,
     updatedFields: Partial<Registration>,
@@ -123,6 +151,12 @@ const useRegistrations = () => {
     }
   };
 
+  /**
+   * Deleta um registro pelo seu ID.
+   *
+   * @param id - O ID do registro a ser deletado.
+   * @returns Uma Promise que resolve em um objeto de resposta contendo informações sobre o sucesso ou falha da operação.
+   */
   const deleteRegistration = async (id: string): Promise<ActionResponse> => {
     setLoading(true);
     try {

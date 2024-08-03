@@ -3,6 +3,19 @@ import useRegistrations from "~/hooks/useRegistrations";
 import { Registration } from "~/types/registration";
 import { ActionResponse } from "~/types/actionResponse";
 
+/**
+ * Tipo de contexto para o contexto de registro.
+ *
+ * @typedef {Object} RegistrationContextType
+ * @property {Registration[]} registrations - Lista de registros.
+ * @property {boolean} loading - Indica se está carregando.
+ * @property {string | null} error - Mensagem de erro, se houver.
+ * @property {() => Promise<ActionResponse>} fetchRegistrations - Função assíncrona para buscar registros.
+ * @property {(newRegistration: Omit<Registration, "id">) => Promise<ActionResponse>} addRegistration - Função assíncrona para adicionar um novo registro.
+ * @property {(id: string, updatedFields: Partial<Registration>) => Promise<ActionResponse>} updateRegistration - Função assíncrona para atualizar um registro existente.
+ * @property {(cpf: string) => Promise<ActionResponse>} fetchByCpf - Função assíncrona para buscar registros por CPF.
+ * @property {(id: string) => Promise<ActionResponse>} deleteRegistration - Função assíncrona para excluir um registro.
+ */
 type RegistrationContextType = {
   registrations: Registration[];
   loading: boolean;
