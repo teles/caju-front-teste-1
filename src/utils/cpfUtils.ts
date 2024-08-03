@@ -18,11 +18,12 @@ const isValidCpf = (cpf: string): boolean => {
  */
 export const validateCpfChange = (value: string) => {
   const cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-  const shouldTriggerValidation = cpfPattern.test(value);
-  const isValid = shouldTriggerValidation && isValidCpf(value);
+  const isCompleted = cpfPattern.test(value);
+  const isValid = isCompleted && isValidCpf(value);
   return {
     value,
-    error: shouldTriggerValidation ? (isValid ? "" : "CPF inválido") : "",
+    error: isCompleted ? (isValid ? "" : "CPF inválido") : "",
+    isCompleted,
   };
 };
 

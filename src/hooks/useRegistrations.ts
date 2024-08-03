@@ -28,7 +28,7 @@ const useRegistrations = () => {
     }
   }, []);
 
-  const searchByCpf = async (cpf: string) => {
+  const fetchByCpf = async (cpf: string): Promise<void> => {
     setLoading(true);
     const url = `${apiUrl}/registrations?cpf=${cpf}`;
     try {
@@ -114,7 +114,7 @@ const useRegistrations = () => {
     fetchRegistrations,
     addRegistration,
     updateRegistration,
-    searchByCpf,
+    fetchByCpf,
     deleteRegistration,
   };
 };

@@ -5,6 +5,7 @@ import Button from "~/components/Buttons";
 import { IconButton } from "~/components/Buttons/IconButton";
 import TextField from "~/components/TextField";
 import { validateCpfChange, cpfMask } from "~/utils/cpfUtils";
+import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import routes from "~/router/routes";
 import * as S from "./styles";
 
@@ -12,15 +13,25 @@ export const SearchBar = () => {
   const history = useHistory();
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
+  const [previousCpf, setPreviousCpf] = useState("");
+  const { fetchByCpf, fetchRegistrations } = useRegistrationContext();
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
   };
 
   const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value, error } = validateCpfChange(event.target.value);
+    const { value, error, isCompleted } = validateCpfChange(event.target.value);
     setCpf(value);
     setCpfError(error);
+
+    if (isCompleted && !error && value !== previousCpf) {
+      fetchByCpf(value);
+      setPreviousCpf(value);
+    } else if (!isCompleted && previousCpf) {
+      fetchRegistrations();
+      setPreviousCpf("");
+    }
   };
 
   return (

@@ -6,11 +6,13 @@ type RegistrationContextType = {
   registrations: Registration[];
   loading: boolean;
   error: string | null;
+  fetchRegistrations: () => Promise<Registration[]>;
   addRegistration: (newRegistration: Omit<Registration, "id">) => Promise<void>;
   updateRegistration: (
     id: string,
     updatedFields: Partial<Registration>,
   ) => Promise<void>;
+  fetchByCpf: (cpf: string) => Promise<void>;
   deleteRegistration: (id: string) => Promise<void>;
 };
 
@@ -32,6 +34,7 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
     fetchRegistrations,
     addRegistration,
     updateRegistration,
+    fetchByCpf,
     deleteRegistration,
   } = useRegistrations();
 
@@ -46,7 +49,9 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
         loading,
         error,
         addRegistration,
+        fetchRegistrations,
         updateRegistration,
+        fetchByCpf,
         deleteRegistration,
       }}
     >
