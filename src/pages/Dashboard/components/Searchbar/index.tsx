@@ -14,7 +14,7 @@ export const SearchBar = () => {
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
   const [previousCpf, setPreviousCpf] = useState("");
-  const { fetchByCpf, fetchRegistrations } = useRegistrationContext();
+  const { fetchByCpf, fetchRegistrations, loading } = useRegistrationContext();
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
@@ -34,6 +34,14 @@ export const SearchBar = () => {
     }
   };
 
+  const handleRefresh = () => {
+    if (cpf && !cpfError && validateCpfChange(cpf).isCompleted) {
+      fetchByCpf(cpf);
+    } else {
+      fetchRegistrations();
+    }
+  };
+
   return (
     <S.Container>
       <TextField
@@ -44,7 +52,7 @@ export const SearchBar = () => {
         error={cpfError}
       />
       <S.Actions>
-        <IconButton aria-label="refetch">
+        <IconButton aria-label="refetch" onClick={handleRefresh}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
