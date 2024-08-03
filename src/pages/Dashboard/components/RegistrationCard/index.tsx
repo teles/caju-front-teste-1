@@ -9,7 +9,7 @@ import {
 } from "react-icons/hi";
 import { useState } from "react";
 import ConfirmationModal from "~/components/ConfirmationModal";
-import useRegistrations from "~/hooks/useRegistrations";
+import { useRegistrationContext } from "~/contexts/RegistrationContext";
 
 type Props = {
   data?: Registration;
@@ -27,7 +27,7 @@ type ModalContent = {
 const RegistrationCard = ({ data, isLoading = false }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
-  const { updateRegistration, deleteRegistration } = useRegistrations();
+  const { updateRegistration, deleteRegistration } = useRegistrationContext();
 
   const openModal = (modalContent: ModalContent) => {
     setModalContent(modalContent);

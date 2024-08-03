@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Registration } from "~/types/registration";
 
@@ -8,23 +8,25 @@ const useRegistrations = () => {
   const [error, setError] = useState<string | null>(null);
   const apiUrl = "http://localhost:3000";
 
-  const fetchRegistrations = async () => {
+  const fetchRegistrations = useCallback(async () => {
     setLoading(true);
     try {
       const response: { data: Registration[] } = await axios.get(
         `${apiUrl}/registrations`,
       );
       setRegistrations(response.data);
+      return response.data;
     } catch (error) {
       setError(
         error instanceof Error
           ? error.message
           : "Failed to fetch registrations",
       );
+      return [];
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const searchByCpf = async (cpf: string) => {
     setLoading(true);
@@ -103,7 +105,7 @@ const useRegistrations = () => {
 
   useEffect(() => {
     fetchRegistrations();
-  }, []);
+  }, [fetchRegistrations]);
 
   return {
     registrations,

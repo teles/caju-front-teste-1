@@ -1,16 +1,19 @@
 import Collumns from "./components/Columns";
 import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
-import useRegistrations from "~/hooks/useRegistrations";
+import { useRegistrationContext } from "~/contexts/RegistrationContext";
 
 const DashboardPage = () => {
-  const { registrations, loading } = useRegistrations();
+  const { registrations, loading } = useRegistrationContext();
 
   return (
-    <S.Container>
-      <SearchBar />
-      <Collumns registrations={registrations} loading={loading} />
-    </S.Container>
+    <>
+      <S.Container>
+        <SearchBar />
+        <Collumns registrations={registrations} loading={loading} />
+      </S.Container>
+    </>
   );
 };
+
 export default DashboardPage;

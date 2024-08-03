@@ -10,12 +10,12 @@ import { useHistory } from "react-router-dom";
 import routes from "~/router/routes";
 import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
 import { RegistrationStatus } from "~/types/registration";
-import useRegistrations from "~/hooks/useRegistrations";
+import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import ConfirmationModal from "~/components/ConfirmationModal";
 
 const NewUserPage = () => {
   const history = useHistory();
-  const { addRegistration } = useRegistrations();
+  const { addRegistration } = useRegistrationContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const goToHome = () => {
