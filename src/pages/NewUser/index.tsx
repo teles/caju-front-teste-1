@@ -12,6 +12,7 @@ import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
 import { RegistrationStatus } from "~/types/registration";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import ConfirmationModal from "~/components/ConfirmationModal";
+import { showToast } from "~/utils/toastUtils";
 
 const NewUserPage = () => {
   const history = useHistory();
@@ -51,13 +52,14 @@ const NewUserPage = () => {
       admissionDate: Yup.date().required("Data de admissão é obrigatória"),
     }),
     onSubmit: async (values, { setSubmitting, resetForm }) => {
-      await addRegistration({
+      const response = await addRegistration({
         employeeName: values.name,
         email: values.email,
         cpf: values.cpf,
         admissionDate: values.admissionDate,
         status: RegistrationStatus.REVIEW,
       });
+      showToast(response);
       setSubmitting(false);
       resetForm();
       history.push(routes.dashboard);
