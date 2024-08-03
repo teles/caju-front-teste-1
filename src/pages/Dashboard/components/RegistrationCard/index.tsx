@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ButtonSmall } from "~/components/Buttons";
 import { Registration, RegistrationStatus } from "~/types/registration";
 import * as S from "./styles";
@@ -7,9 +8,10 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { useState } from "react";
 import ConfirmationModal from "~/components/ConfirmationModal";
+import { toast } from "react-toastify";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
+import { ActionResponse } from "~/types/actionResponse";
 
 type Props = {
   data?: Registration;
@@ -29,6 +31,14 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
   const { updateRegistration, deleteRegistration } = useRegistrationContext();
 
+  const _showToast = (actionResponse: ActionResponse) => {
+    if (actionResponse.success) {
+      toast.success(actionResponse.message);
+    } else {
+      toast.error(actionResponse.message);
+    }
+  };
+
   const openModal = (modalContent: ModalContent) => {
     setModalContent(modalContent);
     setIsModalOpen(true);
@@ -39,20 +49,22 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
     setModalContent(null);
   };
 
-  const deleteRegistrationAction = (id: Registration["id"]) => {
-    deleteRegistration(id);
+  const deleteRegistrationAction = async (id: Registration["id"]) => {
+    const response: ActionResponse = await deleteRegistration(id);
+    _showToast(response);
     _closeModal();
   };
 
-  const updateRegistrationAction = ({
+  const updateRegistrationAction = async ({
     id,
     status,
   }: {
     id: Registration["id"];
     status: RegistrationStatus;
   }) => {
-    updateRegistration(id, { status });
+    const response = await updateRegistration(id, { status });
     _closeModal();
+    _showToast(response);
   };
 
   return (
@@ -149,7 +161,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
             onClick={() => {
               openModal({
                 title: "Excluir",
-                text: `Tem certeza que deseja excluir o registro de ${data?.employeeName}?`,
+                text: `Tem certeza que deseja excluir o cadastro de ${data?.employeeName}?`,
                 onConfirm: () => {
                   deleteRegistrationAction(data?.id ?? "");
                 },
@@ -202,9 +214,9 @@ export const EmptyStateRegistrationCard = ({
             d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.75c-5.385 0-9.75-4.365-9.75-9.75S6.615 2.25 12 2.25 21.75 6.615 21.75 12 17.385 21.75 12 21.75zM11.25 6.75a.75.75 0 011.5 0v6a.75.75 0 01-1.5 0V6.75zm.75 9a1.125 1.125 0 110 2.25 1.125 1.125 0 010-2.25z"
           />
         </svg>
-        <h3>Nenhum registro encontrado</h3>
+        <h3>Nenhum cadastro encontrado</h3>
         <p>
-          Por favor, adicione um novo registro ou atualize os registros
+          Por favor, adicione um novo cadastro ou atualize os cadastros
           existentes.
         </p>
       </S.CardEmptyMessage>

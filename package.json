@@ -26,6 +26,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "5.1.2",
     "react-text-mask": "^5.5.0",
+    "react-toastify": "^10.0.5",
     "styled-components": "^6.1.11",
     "text-mask-addons": "^3.8.0",
     "yup": "^1.4.0"

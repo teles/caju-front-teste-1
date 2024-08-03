@@ -1,19 +1,22 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import useRegistrations from "~/hooks/useRegistrations";
 import { Registration } from "~/types/registration";
+import { ActionResponse } from "~/types/actionResponse";
 
 type RegistrationContextType = {
   registrations: Registration[];
   loading: boolean;
   error: string | null;
-  fetchRegistrations: () => Promise<Registration[]>;
-  addRegistration: (newRegistration: Omit<Registration, "id">) => Promise<void>;
+  fetchRegistrations: () => Promise<ActionResponse>;
+  addRegistration: (
+    newRegistration: Omit<Registration, "id">,
+  ) => Promise<ActionResponse>;
   updateRegistration: (
     id: string,
     updatedFields: Partial<Registration>,
-  ) => Promise<void>;
-  fetchByCpf: (cpf: string) => Promise<void>;
-  deleteRegistration: (id: string) => Promise<void>;
+  ) => Promise<ActionResponse>;
+  fetchByCpf: (cpf: string) => Promise<ActionResponse>;
+  deleteRegistration: (id: string) => Promise<ActionResponse>;
 };
 
 const RegistrationContext = createContext<RegistrationContextType | undefined>(

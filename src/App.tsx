@@ -1,6 +1,8 @@
 import Router from "~/router";
 import { Header } from "./components/Header";
 import { RegistrationProvider } from "~/contexts/RegistrationContext";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -9,6 +11,7 @@ function App() {
         <h1>Caju Front Teste</h1>
       </Header>
       <Router />
+      <ToastContainer />
     </RegistrationProvider>
   );
 }
