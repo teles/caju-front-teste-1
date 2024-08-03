@@ -59,6 +59,59 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
     showToast(response);
   };
 
+  const handleReprovarClick = () =>
+    openModal({
+      title: "Reprovar Review",
+      text: `Tem certeza que deseja reprovar o review de ${data?.employeeName}?`,
+      onConfirm: () => {
+        updateRegistrationAction({
+          id: data!.id,
+          status: RegistrationStatus.REPROVED,
+        });
+      },
+      confirmText: "Sim, reprovar",
+      cancelText: "Não, cancelar",
+    });
+
+  const handleAprovarClick = () =>
+    openModal({
+      title: "Aprovar Review",
+      text: `Tem certeza que deseja aprovar o review de ${data?.employeeName}?`,
+      onConfirm: () => {
+        updateRegistrationAction({
+          id: data!.id,
+          status: RegistrationStatus.APPROVED,
+        });
+      },
+      confirmText: "Sim, aprovar",
+      cancelText: "Não, cancelar",
+    });
+
+  const handleRevisarNovamenteClick = () =>
+    openModal({
+      title: "Revisar novamente",
+      text: `Tem certeza que deseja revisar novamente o review de ${data?.employeeName}?`,
+      onConfirm: () => {
+        updateRegistrationAction({
+          id: data!.id,
+          status: RegistrationStatus.REVIEW,
+        });
+      },
+      confirmText: "Sim, revisar",
+      cancelText: "Não, cancelar",
+    });
+
+  const handleDeleteClick = () =>
+    openModal({
+      title: "Excluir",
+      text: `Tem certeza que deseja excluir o cadastro de ${data?.employeeName}?`,
+      onConfirm: () => {
+        deleteRegistrationAction(data!.id);
+      },
+      confirmText: "Sim, excluir",
+      cancelText: "Não, cancelar",
+    });
+
   return (
     <>
       <S.Card>
@@ -91,39 +144,13 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
             <>
               <ButtonSmall
                 bgcolor="rgb(255, 145, 154)"
-                onClick={() =>
-                  openModal({
-                    title: "Reprovar Review",
-                    text: `Tem certeza que deseja reprovar o review de ${data?.employeeName}?`,
-                    onConfirm: () => {
-                      updateRegistrationAction({
-                        id: data.id,
-                        status: RegistrationStatus.REPROVED,
-                      });
-                    },
-                    confirmText: "Sim, reprovar",
-                    cancelText: "Não, cancelar",
-                  })
-                }
+                onClick={handleReprovarClick}
               >
                 Reprovar {data?.status}
               </ButtonSmall>
               <ButtonSmall
                 bgcolor="rgb(155, 229, 155)"
-                onClick={() =>
-                  openModal({
-                    title: "Aprovar Review",
-                    text: `Tem certeza que deseja aprovar o review de ${data?.employeeName}?`,
-                    onConfirm: () => {
-                      updateRegistrationAction({
-                        id: data.id,
-                        status: RegistrationStatus.APPROVED,
-                      });
-                    },
-                    confirmText: "Sim, aprovar",
-                    cancelText: "Não, cancelar",
-                  })
-                }
+                onClick={handleAprovarClick}
               >
                 Aprovar
               </ButtonSmall>
@@ -131,37 +158,12 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
           ) : (
             <ButtonSmall
               bgcolor="#ff8858"
-              onClick={() => {
-                openModal({
-                  title: "Revisar novamente",
-                  text: `Tem certeza que deseja revisar novamente o review de ${data?.employeeName}?`,
-                  onConfirm: () => {
-                    updateRegistrationAction({
-                      id: data?.id ?? "",
-                      status: RegistrationStatus.REVIEW,
-                    });
-                  },
-                  confirmText: "Sim, revisar",
-                  cancelText: "Não, cancelar",
-                });
-              }}
+              onClick={handleRevisarNovamenteClick}
             >
               Revisar novamente
             </ButtonSmall>
           )}
-          <HiOutlineTrash
-            onClick={() => {
-              openModal({
-                title: "Excluir",
-                text: `Tem certeza que deseja excluir o cadastro de ${data?.employeeName}?`,
-                onConfirm: () => {
-                  deleteRegistrationAction(data?.id ?? "");
-                },
-                confirmText: "Sim, excluir",
-                cancelText: "Não, cancelar",
-              });
-            }}
-          />
+          <HiOutlineTrash onClick={handleDeleteClick} />
         </S.Actions>
       </S.Card>
       {modalContent && (
