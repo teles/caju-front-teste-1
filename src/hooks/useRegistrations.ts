@@ -45,7 +45,7 @@ const useRegistrations = () => {
       setError(null);
       return {
         success: true,
-        message: "Cadastros carregados com sucesso",
+        message: "Cadastros filtrados por CPF carregados com sucesso",
       };
     } catch (error) {
       setError(
@@ -55,7 +55,7 @@ const useRegistrations = () => {
       );
       return {
         success: false,
-        message: "Falha ao carregar cadastros",
+        message: "Falha ao carregar cadastros filtrados por CPF",
       };
     } finally {
       setLoading(false);

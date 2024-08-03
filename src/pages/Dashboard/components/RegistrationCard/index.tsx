@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { ButtonSmall } from "~/components/Buttons";
-import { Registration, RegistrationStatus } from "~/types/registration";
-import * as S from "./styles";
 import {
   HiOutlineMail,
   HiOutlineUser,
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
+import { ButtonSmall } from "~/components/Buttons";
+import { Registration, RegistrationStatus } from "~/types/registration";
+import { showToast } from "~/utils/toastUtils";
+import * as S from "./styles";
 import ConfirmationModal from "~/components/ConfirmationModal";
-import { toast } from "react-toastify";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import { ActionResponse } from "~/types/actionResponse";
 
@@ -31,14 +31,6 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
   const { updateRegistration, deleteRegistration } = useRegistrationContext();
 
-  const _showToast = (actionResponse: ActionResponse) => {
-    if (actionResponse.success) {
-      toast.success(actionResponse.message);
-    } else {
-      toast.error(actionResponse.message);
-    }
-  };
-
   const openModal = (modalContent: ModalContent) => {
     setModalContent(modalContent);
     setIsModalOpen(true);
@@ -51,7 +43,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
 
   const deleteRegistrationAction = async (id: Registration["id"]) => {
     const response: ActionResponse = await deleteRegistration(id);
-    _showToast(response);
+    showToast(response);
     _closeModal();
   };
 
@@ -64,7 +56,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
   }) => {
     const response = await updateRegistration(id, { status });
     _closeModal();
-    _showToast(response);
+    showToast(response);
   };
 
   return (

@@ -8,37 +8,42 @@ import { validateCpfChange, cpfMask } from "~/utils/cpfUtils";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import routes from "~/router/routes";
 import * as S from "./styles";
+import { showToast } from "~/utils/toastUtils";
 
 export const SearchBar = () => {
   const history = useHistory();
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
   const [previousCpf, setPreviousCpf] = useState("");
-  const { fetchByCpf, fetchRegistrations, loading } = useRegistrationContext();
+  const { fetchByCpf, fetchRegistrations } = useRegistrationContext();
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
   };
 
-  const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleCpfChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { value, error, isCompleted } = validateCpfChange(event.target.value);
     setCpf(value);
     setCpfError(error);
 
     if (isCompleted && !error && value !== previousCpf) {
-      fetchByCpf(value);
+      const response = await fetchByCpf(value);
+      showToast(response);
       setPreviousCpf(value);
     } else if (!isCompleted && previousCpf) {
-      fetchRegistrations();
+      const response = await fetchRegistrations();
+      showToast(response);
       setPreviousCpf("");
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     if (cpf && !cpfError && validateCpfChange(cpf).isCompleted) {
-      fetchByCpf(cpf);
+      const response = await fetchByCpf(cpf);
+      showToast(response);
     } else {
-      fetchRegistrations();
+      const response = await fetchRegistrations();
+      showToast(response);
     }
   };
 
