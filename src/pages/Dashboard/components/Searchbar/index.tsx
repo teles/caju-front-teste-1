@@ -15,7 +15,7 @@ export const SearchBar = () => {
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
   const [previousCpf, setPreviousCpf] = useState("");
-  const { fetchRegistrations } = useRegistrationContext();
+  const { fetchRegistrations, setFilter } = useRegistrationContext();
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
@@ -27,6 +27,7 @@ export const SearchBar = () => {
     setCpfError(error);
 
     if (isCompleted && !error && value !== previousCpf) {
+      setFilter({ cpf: value });
       const response = await fetchRegistrations({ cpf: value });
       showToast(response);
       setPreviousCpf(value);

@@ -21,6 +21,7 @@ type RegistrationContextType = {
   loading: boolean;
   error: string | null;
   fetchRegistrations: (filter?: RegistrationFilter) => Promise<ActionResponse>;
+  setFilter: (filter: RegistrationFilter | null) => void;
   addRegistration: (
     newRegistration: Omit<Registration, "id">,
   ) => Promise<ActionResponse>;
@@ -47,6 +48,7 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
     loading,
     error,
     fetchRegistrations,
+    setFilter,
     addRegistration,
     updateRegistration,
     deleteRegistration,
@@ -62,6 +64,7 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
         registrations,
         loading,
         error,
+        setFilter,
         addRegistration,
         fetchRegistrations,
         updateRegistration,

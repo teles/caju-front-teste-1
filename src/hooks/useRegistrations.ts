@@ -12,7 +12,12 @@ const useRegistrations = () => {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState<RegistrationFilter | null>(null);
   const apiUrl = "http://localhost:3000";
+
+  const _refreshRegistrations = async () => {
+    filter ? await fetchRegistrations(filter) : await fetchRegistrations();
+  };
 
   /**
    * Função assíncrona que busca as cadastros de acordo com um filtro opcional.
@@ -67,7 +72,7 @@ const useRegistrations = () => {
     setLoading(true);
     try {
       await axios.post(`${apiUrl}/registrations`, newRegistration);
-      await fetchRegistrations();
+      await _refreshRegistrations();
       return {
         success: true,
         message: "Cadastro atualizado com sucesso",
@@ -111,7 +116,7 @@ const useRegistrations = () => {
     const mergedRegistration = { ...registration, ...updatedFields };
     try {
       await axios.put(`${apiUrl}/registrations/${id}`, mergedRegistration);
-      await fetchRegistrations();
+      await _refreshRegistrations();
       return {
         success: true,
         message: "Cadastro atualizado com sucesso",
@@ -141,7 +146,7 @@ const useRegistrations = () => {
     setLoading(true);
     try {
       await axios.delete(`${apiUrl}/registrations/${id}`);
-      await fetchRegistrations();
+      await _refreshRegistrations();
       return {
         success: true,
         message: "Cadastro deletado com sucesso",
@@ -169,6 +174,7 @@ const useRegistrations = () => {
     registrations,
     loading,
     error,
+    setFilter,
     fetchRegistrations,
     addRegistration,
     updateRegistration,
