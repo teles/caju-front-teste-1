@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Registration, RegistrationFilter } from "~/types/registration";
 import { ActionResponse } from "~/types/actionResponse";
+import { removeNonNumeric } from "~/utils/textUtils";
 
 /**
  * Hook que gerencia as cadastros.
@@ -30,10 +31,14 @@ const useRegistrations = () => {
   const fetchRegistrations = useCallback(
     async (filter?: RegistrationFilter): Promise<ActionResponse> => {
       setLoading(true);
+      const formattedFilter = {
+        ...filter,
+        cpf: filter?.cpf ? removeNonNumeric(filter.cpf) : undefined,
+      };
       try {
         const response: { data: Registration[] } = await axios.get(
           `${apiUrl}/registrations`,
-          { params: filter },
+          { params: formattedFilter },
         );
         setRegistrations(response.data);
         const messageByFilter = filter?.cpf

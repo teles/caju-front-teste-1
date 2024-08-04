@@ -13,6 +13,7 @@ import { RegistrationStatus } from "~/types/registration";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import ConfirmationModal from "~/components/ConfirmationModal";
 import { showToast } from "~/utils/toastUtils";
+import { removeNonNumeric } from "~/utils/textUtils";
 
 const NewUserPage = () => {
   const history = useHistory();
@@ -55,7 +56,7 @@ const NewUserPage = () => {
       const response = await addRegistration({
         employeeName: values.name,
         email: values.email,
-        cpf: values.cpf,
+        cpf: removeNonNumeric(values.cpf),
         admissionDate: values.admissionDate,
         status: RegistrationStatus.REVIEW,
       });
