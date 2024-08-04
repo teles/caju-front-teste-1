@@ -32,9 +32,9 @@ const Collumns = ({ registrations, loading = false }: Props) => {
     <S.Container>
       {allColumns.map((collum) => {
         return (
-          <S.Column status={collum.status} key={collum.title}>
+          <S.Column $status={collum.status} key={collum.title}>
             <>
-              <S.TitleColumn status={collum.status}>
+              <S.TitleColumn $status={collum.status}>
                 {collum.title}
                 {loading && <LoadingDots />}
               </S.TitleColumn>

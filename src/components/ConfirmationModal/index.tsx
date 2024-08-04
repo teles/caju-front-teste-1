@@ -61,7 +61,7 @@ const ConfirmationModal = ({
         <ModalTitle>{title}</ModalTitle>
         <ModalText>{text}</ModalText>
         <ModalActions>
-          <Button onClick={onRequestClose} themeType="secondary">
+          <Button onClick={onRequestClose} $themeType="secondary">
             {cancelText}
           </Button>
           <Button onClick={onConfirm}>{confirmText}</Button>

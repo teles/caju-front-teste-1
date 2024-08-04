@@ -143,13 +143,13 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
           {data?.status === RegistrationStatus.REVIEW ? (
             <>
               <ButtonSmall
-                bgcolor="rgb(255, 145, 154)"
+                $bgcolor="rgb(255, 145, 154)"
                 onClick={handleReprovarClick}
               >
                 Reprovar {data?.status}
               </ButtonSmall>
               <ButtonSmall
-                bgcolor="rgb(155, 229, 155)"
+                $bgcolor="rgb(155, 229, 155)"
                 onClick={handleAprovarClick}
               >
                 Aprovar
@@ -157,7 +157,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
             </>
           ) : (
             <ButtonSmall
-              bgcolor="#ff8858"
+              $bgcolor="#ff8858"
               onClick={handleRevisarNovamenteClick}
             >
               Revisar novamente
@@ -188,7 +188,7 @@ export const EmptyStateRegistrationCard = ({
 }) => {
   return (
     <S.Card>
-      <S.CardEmptyMessage status={status}>
+      <S.CardEmptyMessage $status={status}>
         <svg
           width="80"
           height="80"

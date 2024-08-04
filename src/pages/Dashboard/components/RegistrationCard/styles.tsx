@@ -32,12 +32,12 @@ export const Card = styled.div`
 `;
 
 export const CardEmptyMessage = styled.div<{
-  status: RegistrationStatus;
+  $status: RegistrationStatus;
 }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${({ status }) => registrationStatusStyles[status].title};
+  color: ${({ $status }) => registrationStatusStyles[$status].title};
   gap: 8px;
   font-size: 1rem;
   font-weight: 600;

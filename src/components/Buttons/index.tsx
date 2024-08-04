@@ -17,7 +17,7 @@ const themes: Record<string, ButtonTheme> = {
 };
 
 const Button = styled.button<{
-  themeType?: "primary" | "secondary";
+  $themeType?: "primary" | "secondary";
 }>`
   outline: none;
   display: flex;
@@ -31,24 +31,21 @@ const Button = styled.button<{
   font-size: 16px;
   font-weight: 600;
   background-color: ${(props) =>
-    themes[props.themeType || "primary"].backgroundColor};
-  color: ${(props) => themes[props.themeType || "primary"].color};
+    themes[props.$themeType || "primary"].backgroundColor};
+  color: ${(props) => themes[props.$themeType || "primary"].color};
 `;
 
 export const ButtonSmall = styled.button<{
-  bgcolor?: string;
-  color?: string;
-  isDisabled?: boolean;
+  $bgcolor?: string;
 }>`
   font-size: 12px;
   outline: none;
   border-radius: 4px;
   border: none;
   padding: 4px 16px;
-  background-color: ${(props) => props.bgcolor ?? "none"};
-  color: ${(props) => props.color ?? "#000"};
-  cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
-  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
+  background-color: ${(props) => props.$bgcolor ?? "none"};
+  color: #000;
+  cursor: pointer;
 `;
 
 export default Button;

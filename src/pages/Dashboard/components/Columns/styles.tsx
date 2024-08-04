@@ -15,10 +15,10 @@ export const Container = styled.div`
   }
 `;
 
-export const Column = styled.div<{ status: RegistrationStatus }>`
+export const Column = styled.div<{ $status: RegistrationStatus }>`
   height: auto;
-  background-color: ${({ status }) =>
-    registrationStatusStyles[status].background};
+  background-color: ${({ $status }) =>
+    registrationStatusStyles[$status].background};
   border-radius: 32px;
   max-height: 80vh;
   @media (min-width: 1024px) {
@@ -26,9 +26,9 @@ export const Column = styled.div<{ status: RegistrationStatus }>`
   }
 `;
 
-export const TitleColumn = styled.h3<{ status: RegistrationStatus }>`
+export const TitleColumn = styled.h3<{ $status: RegistrationStatus }>`
   margin: 0px;
-  color: ${({ status }) => registrationStatusStyles[status].title};
+  color: ${({ $status }) => registrationStatusStyles[$status].title};
   margin: 24px;
 `;
 
