@@ -1,7 +1,12 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import Modal from "react-modal";
 import CustomModal from "./index";
+
+beforeAll(() => {
+  Modal.setAppElement(document.createElement("div"));
+});
 
 describe("CustomModal", () => {
   const renderModal = (

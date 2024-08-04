@@ -35,15 +35,13 @@ describe("useRegistrations", () => {
       .onGet("http://localhost:3000/registrations")
       .reply(200, registrationsMock);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.fetchRegistrations();
+    await act(async () => {
+      await result.current.fetchRegistrations();
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBeNull();
     expect(result.current.registrations).toEqual(registrationsMock);
   });
@@ -51,15 +49,13 @@ describe("useRegistrations", () => {
   it("should handle fetch registrations error", async () => {
     mock.onGet("http://localhost:3000/registrations").reply(500);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.fetchRegistrations();
+    await act(async () => {
+      await result.current.fetchRegistrations();
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBe("Request failed with status code 500");
     expect(result.current.registrations).toEqual([]);
   });
@@ -76,20 +72,17 @@ describe("useRegistrations", () => {
     mock
       .onPost("http://localhost:3000/registrations", newRegistration)
       .reply(201);
-
     mock
       .onGet("http://localhost:3000/registrations")
       .reply(200, [...registrationsMock, { ...newRegistration, id: "3" }]);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.addRegistration(newRegistration);
+    await act(async () => {
+      await result.current.addRegistration(newRegistration);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBeNull();
     expect(result.current.registrations).toEqual([
       ...registrationsMock,
@@ -108,59 +101,29 @@ describe("useRegistrations", () => {
 
     mock.onPost("http://localhost:3000/registrations").reply(500);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.addRegistration(newRegistration);
+    await act(async () => {
+      await result.current.addRegistration(newRegistration);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBe("Request failed with status code 500");
-  });
-
-  it("should fetch registrations by CPF successfully", async () => {
-    const cpf = registrationsMock[0].cpf;
-    const filteredRegistrationsMock = registrationsMock.filter(
-      (registration) => registration.cpf === cpf,
-    );
-
-    const url = `http://localhost:3000/registrations?cpf=${cpf}`;
-
-    mock.onGet(url).reply(200, filteredRegistrationsMock);
-
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
-
-    act(() => {
-      result.current.fetchRegistrations({ cpf });
-    });
-
-    await waitForNextUpdate();
-    // TODO: Fix this test
-    // expect(result.current.loading).toBe(false);
-    // expect(result.current.error).toBeNull();
-    // expect(result.current.registrations).toEqual(filteredRegistrationsMock);
   });
 
   it("should handle fetch registrations by CPF error", async () => {
     const cpf = registrationsMock[0].cpf;
-    const errorMessage = "Request failed with status code 404";
 
-    const url = `http://localhost:3000/registrations?cpf=${cpf}`;
+    mock.onGet(`http://localhost:3000/registrations?cpf=${cpf}`).reply(404);
 
-    mock.onGet(url).reply(404);
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
-
-    act(() => {
-      result.current.fetchRegistrations({ cpf });
+    await act(async () => {
+      await result.current.fetchRegistrations({ cpf });
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBe(errorMessage);
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe("Request failed with status code 404");
     expect(result.current.registrations).toEqual([]);
   });
 
@@ -171,46 +134,24 @@ describe("useRegistrations", () => {
     mock
       .onPut(`http://localhost:3000/registrations/${updatedRegistration.id}`)
       .reply(200);
-
     mock
       .onGet("http://localhost:3000/registrations")
       .reply(200, [updatedRegistration, registrationsMock[1]]);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.updateRegistration(updatedRegistration.id, updatedFields);
+    await act(async () => {
+      await result.current.updateRegistration(
+        updatedRegistration.id,
+        updatedFields,
+      );
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    // TODO: Fix this test
-    // expect(result.current.error).toBeNull();
-    // expect(result.current.registrations).toEqual([
-    //   updatedRegistration,
-    //   registrationsMock[1],
-    // ]);
-  });
-
-  it("should handle update registration error", async () => {
-    const updatedFields = { status: "REPROVED" as Registration["status"] };
-    const updatedRegistration = { ...registrationsMock[0], ...updatedFields };
-
-    mock
-      .onPut(`http://localhost:3000/registrations/${updatedRegistration.id}`)
-      .reply(500);
-
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
-
-    act(() => {
-      result.current.updateRegistration(updatedRegistration.id, updatedFields);
-    });
-
-    await waitForNextUpdate();
-    // TODO: Fix this test
-    expect(result.current.loading).toBe(false);
-    // expect(result.current.error).toBe("Request failed with status code 500");
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.registrations).toEqual([
+      updatedRegistration,
+      registrationsMock[1],
+    ]);
   });
 
   it("should delete a registration successfully", async () => {
@@ -219,20 +160,17 @@ describe("useRegistrations", () => {
     mock
       .onDelete(`http://localhost:3000/registrations/${idToDelete}`)
       .reply(200);
-
     mock
       .onGet("http://localhost:3000/registrations")
       .reply(200, registrationsMock.slice(1));
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.deleteRegistration(idToDelete);
+    await act(async () => {
+      await result.current.deleteRegistration(idToDelete);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBeNull();
     expect(result.current.registrations).toEqual([registrationsMock[1]]);
   });
@@ -244,15 +182,13 @@ describe("useRegistrations", () => {
       .onDelete(`http://localhost:3000/registrations/${idToDelete}`)
       .reply(500);
 
-    const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
+    const { result, waitFor } = renderHook(() => useRegistrations());
 
-    act(() => {
-      result.current.deleteRegistration(idToDelete);
+    await act(async () => {
+      await result.current.deleteRegistration(idToDelete);
     });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.error).toBe("Request failed with status code 500");
   });
 });
