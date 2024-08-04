@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import useRegistrations from "~/hooks/useRegistrations";
-import { Registration } from "~/types/registration";
+import { Registration, RegistrationFilter } from "~/types/registration";
 import { ActionResponse } from "~/types/actionResponse";
 
 /**
@@ -20,7 +20,7 @@ type RegistrationContextType = {
   registrations: Registration[];
   loading: boolean;
   error: string | null;
-  fetchRegistrations: () => Promise<ActionResponse>;
+  fetchRegistrations: (filter?: RegistrationFilter) => Promise<ActionResponse>;
   addRegistration: (
     newRegistration: Omit<Registration, "id">,
   ) => Promise<ActionResponse>;
@@ -28,7 +28,6 @@ type RegistrationContextType = {
     id: string,
     updatedFields: Partial<Registration>,
   ) => Promise<ActionResponse>;
-  fetchByCpf: (cpf: string) => Promise<ActionResponse>;
   deleteRegistration: (id: string) => Promise<ActionResponse>;
 };
 
@@ -50,7 +49,6 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
     fetchRegistrations,
     addRegistration,
     updateRegistration,
-    fetchByCpf,
     deleteRegistration,
   } = useRegistrations();
 
@@ -67,7 +65,6 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({
         addRegistration,
         fetchRegistrations,
         updateRegistration,
-        fetchByCpf,
         deleteRegistration,
       }}
     >

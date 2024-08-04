@@ -133,7 +133,7 @@ describe("useRegistrations", () => {
     const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
 
     act(() => {
-      result.current.fetchByCpf(cpf);
+      result.current.fetchRegistrations({ cpf });
     });
 
     await waitForNextUpdate();
@@ -154,7 +154,7 @@ describe("useRegistrations", () => {
     const { result, waitForNextUpdate } = renderHook(() => useRegistrations());
 
     act(() => {
-      result.current.fetchByCpf(cpf);
+      result.current.fetchRegistrations({ cpf });
     });
 
     await waitForNextUpdate();

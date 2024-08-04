@@ -15,7 +15,7 @@ export const SearchBar = () => {
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
   const [previousCpf, setPreviousCpf] = useState("");
-  const { fetchByCpf, fetchRegistrations } = useRegistrationContext();
+  const { fetchRegistrations } = useRegistrationContext();
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
@@ -27,7 +27,7 @@ export const SearchBar = () => {
     setCpfError(error);
 
     if (isCompleted && !error && value !== previousCpf) {
-      const response = await fetchByCpf(value);
+      const response = await fetchRegistrations({ cpf: value });
       showToast(response);
       setPreviousCpf(value);
     } else if (!isCompleted && previousCpf) {
@@ -39,7 +39,7 @@ export const SearchBar = () => {
 
   const handleRefresh = async () => {
     if (cpf && !cpfError && validateCpfChange(cpf).isCompleted) {
-      const response = await fetchByCpf(cpf);
+      const response = await fetchRegistrations({ cpf });
       showToast(response);
     } else {
       const response = await fetchRegistrations();

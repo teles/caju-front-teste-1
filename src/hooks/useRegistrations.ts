@@ -1,8 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Registration } from "~/types/registration";
+import { Registration, RegistrationFilter } from "~/types/registration";
 import { ActionResponse } from "~/types/actionResponse";
 
+/**
+ * Hook que gerencia as cadastros.
+ *
+ * @returns Um objeto contendo as cadastros, o estado de carregamento, mensagens de erro e funções para manipular as cadastros.
+ */
 const useRegistrations = () => {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -10,70 +15,45 @@ const useRegistrations = () => {
   const apiUrl = "http://localhost:3000";
 
   /**
-   * Função assíncrona que busca as inscrições.
+   * Função assíncrona que busca as cadastros de acordo com um filtro opcional.
    *
-   * @returns Uma promessa que resolve em um objeto do tipo ActionResponse.
-   * A promessa é resolvida com sucesso se as inscrições forem carregadas com sucesso,
-   * caso contrário, a promessa é rejeitada com um objeto do tipo ActionResponse indicando a falha.
+   * @param filter - O filtro opcional para a busca das cadastros.
+   * @returns Uma promessa que resolve em um objeto de resposta contendo o resultado da busca.
+   *          - success: Um valor booleano indicando se a busca foi bem-sucedida.
+   *          - message: Uma mensagem de sucesso ou erro, dependendo do resultado da busca.
    */
-  const fetchRegistrations = useCallback(async (): Promise<ActionResponse> => {
-    setLoading(true);
-    try {
-      const response: { data: Registration[] } = await axios.get(
-        `${apiUrl}/registrations`,
-      );
-      setRegistrations(response.data);
-      return {
-        success: true,
-        message: "Cadastros carregados com sucesso",
-      };
-    } catch (error) {
-      setError(
-        error instanceof Error
-          ? error.message
-          : "Failed to fetch registrations",
-      );
-      return {
-        success: false,
-        message: "Falha ao carregar cadastros",
-      };
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  /**
-   * Busca registros por CPF.
-   *
-   * @param cpf - O CPF a ser utilizado como filtro.
-   * @returns Uma promessa que resolve em um objeto de resposta contendo o sucesso da operação e uma mensagem.
-   */
-  const fetchByCpf = async (cpf: string): Promise<ActionResponse> => {
-    setLoading(true);
-    const url = `${apiUrl}/registrations?cpf=${cpf}`;
-    try {
-      const response: { data: Registration[] } =
-        await axios.get<Registration[]>(url);
-      setRegistrations(response.data);
-      setError(null);
-      return {
-        success: true,
-        message: "Cadastros filtrados por CPF carregados com sucesso",
-      };
-    } catch (error) {
-      setError(
-        error instanceof Error
-          ? error.message
-          : "Failed to fetch registrations",
-      );
-      return {
-        success: false,
-        message: "Falha ao carregar cadastros filtrados por CPF",
-      };
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchRegistrations = useCallback(
+    async (filter?: RegistrationFilter): Promise<ActionResponse> => {
+      setLoading(true);
+      try {
+        const response: { data: Registration[] } = await axios.get(
+          `${apiUrl}/registrations`,
+          { params: filter },
+        );
+        setRegistrations(response.data);
+        const messageByFilter = filter?.cpf
+          ? "Cadastros carregados com sucesso, filtrados por CPF"
+          : "Cadastros carregados com sucesso";
+        return {
+          success: true,
+          message: messageByFilter,
+        };
+      } catch (error) {
+        setError(
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch registrations",
+        );
+        return {
+          success: false,
+          message: "Falha ao carregar cadastros",
+        };
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
   /**
    * Adiciona um novo cadastro.
@@ -106,10 +86,10 @@ const useRegistrations = () => {
   };
 
   /**
-   * Atualiza um registro de inscrição.
+   * Atualiza um registro de cadastro.
    *
-   * @param id - O ID do registro de inscrição a ser atualizado.
-   * @param updatedFields - Os campos atualizados do registro de inscrição.
+   * @param id - O ID do registro de cadastro a ser atualizado.
+   * @param updatedFields - Os campos atualizados do registro de cadastro.
    * @returns Uma promessa que resolve em um objeto de resposta de ação.
    *          - success: Um valor booleano indicando se a atualização foi bem-sucedida.
    *          - message: Uma mensagem descrevendo o resultado da atualização.
@@ -192,7 +172,6 @@ const useRegistrations = () => {
     fetchRegistrations,
     addRegistration,
     updateRegistration,
-    fetchByCpf,
     deleteRegistration,
   };
 };

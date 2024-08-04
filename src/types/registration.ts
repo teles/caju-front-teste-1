@@ -29,3 +29,7 @@ export const registrationStatusStyles: {
     title: "#ce2893",
   },
 };
+
+export interface RegistrationFilter {
+  cpf?: string;
+}
