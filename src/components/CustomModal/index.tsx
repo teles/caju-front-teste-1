@@ -1,8 +1,9 @@
 import React from "react";
+import { HiOutlineX } from "react-icons/hi";
 import Modal from "react-modal";
 import styled from "styled-components";
+
 import { IconButton } from "~/components/Buttons/IconButton";
-import { HiOutlineX } from "react-icons/hi";
 
 const customStyles: Modal.Styles = {
   content: {

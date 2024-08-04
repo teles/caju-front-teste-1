@@ -5,13 +5,15 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
+
 import { ButtonSmall } from "~/components/Buttons";
-import { Registration, RegistrationStatus } from "~/types/registration";
-import { showToast } from "~/utils/toastUtils";
-import * as S from "./styles";
 import ConfirmationModal from "~/components/ConfirmationModal";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import { ActionResponse } from "~/types/actionResponse";
+import { Registration, RegistrationStatus } from "~/types/registration";
+import { showToast } from "~/utils/toastUtils";
+
+import * as S from "./styles";
 
 type Props = {
   data?: Registration;

@@ -1,6 +1,7 @@
-import CustomModal, { CustomModalProps } from "~/components/CustomModal";
-import Button from "~/components/Buttons";
 import styled from "styled-components";
+
+import Button from "~/components/Buttons";
+import CustomModal, { CustomModalProps } from "~/components/CustomModal";
 
 const ModalContent = styled.div`
   display: flex;

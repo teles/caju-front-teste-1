@@ -1,8 +1,10 @@
-import Router from "~/router";
-import { Header } from "./components/Header";
-import { RegistrationProvider } from "~/contexts/RegistrationContext";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+
+import { RegistrationProvider } from "~/contexts/RegistrationContext";
+import Router from "~/router";
+
+import { Header } from "./components/Header";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

@@ -1,8 +1,10 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import useRegistrations from "./useRegistrations";
+
 import { Registration, RegistrationStatus } from "~/types/registration";
+
+import useRegistrations from "./useRegistrations";
 
 const mock = new MockAdapter(axios);
 

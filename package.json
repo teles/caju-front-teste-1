@@ -10,6 +10,7 @@
     "test": "jest --verbose --no-cache",
     "test:dev": "jest --watch --verbose --no-cache",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint --fix src/",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

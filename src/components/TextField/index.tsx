@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, Ref } from "react";
-import styled from "styled-components";
 import MaskedInput from "react-text-mask";
+import styled from "styled-components";
 
 const InputDiv = styled.div`
   display: flex;

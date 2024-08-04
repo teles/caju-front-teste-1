@@ -1,14 +1,16 @@
 import { useState, ChangeEvent } from "react";
 import { HiRefresh } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
+
 import Button from "~/components/Buttons";
 import { IconButton } from "~/components/Buttons/IconButton";
 import TextField from "~/components/TextField";
-import { validateCpfChange, cpfMask } from "~/utils/cpfUtils";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
 import routes from "~/router/routes";
-import * as S from "./styles";
+import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
 import { showToast } from "~/utils/toastUtils";
+
+import * as S from "./styles";
 
 export const SearchBar = () => {
   const history = useHistory();

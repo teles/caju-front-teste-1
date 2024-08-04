@@ -1,19 +1,21 @@
-import { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import TextField from "~/components/TextField";
-import * as S from "./styles";
-import Button from "~/components/Buttons";
+import { useState } from "react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
-import { IconButton } from "~/components/Buttons/IconButton";
 import { useHistory } from "react-router-dom";
-import routes from "~/router/routes";
-import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
-import { RegistrationStatus } from "~/types/registration";
-import { useRegistrationContext } from "~/contexts/RegistrationContext";
+import * as Yup from "yup";
+
+import Button from "~/components/Buttons";
+import { IconButton } from "~/components/Buttons/IconButton";
 import ConfirmationModal from "~/components/ConfirmationModal";
-import { showToast } from "~/utils/toastUtils";
+import TextField from "~/components/TextField";
+import { useRegistrationContext } from "~/contexts/RegistrationContext";
+import routes from "~/router/routes";
+import { RegistrationStatus } from "~/types/registration";
+import { cpfMask, validateCpfChange } from "~/utils/cpfUtils";
 import { removeNonNumeric } from "~/utils/textUtils";
+import { showToast } from "~/utils/toastUtils";
+
+import * as S from "./styles";
 
 const NewUserPage = () => {
   const history = useHistory();

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   extends: [
     "eslint:recommended",
@@ -30,5 +31,30 @@ module.exports = {
     "import/named": "off",
     "react-hooks/exhaustive-deps": "warn",
     "prettier/prettier": "error",
+    "import/order": [
+      "error",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "object",
+          "type",
+        ],
+        pathGroups: [
+          {
+            pattern: "~/**",
+            group: "internal",
+          },
+        ],
+        pathGroupsExcludedImportTypes: ["builtin"],
+        "newlines-between": "always",
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
 };

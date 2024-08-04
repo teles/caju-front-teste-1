@@ -1,4 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
+
 import { EmptyStateRegistrationCard } from "~/pages/Dashboard/components/RegistrationCard";
 import { RegistrationStatus } from "~/types/registration";
 

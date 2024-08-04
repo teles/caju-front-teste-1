@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { StoryFn, Meta } from "@storybook/react";
+import { useState } from "react";
+
 import ConfirmationModal, { ConfirmationModalProps } from "./index";
 
 export default {

@@ -1,9 +1,10 @@
+import { LoadingDots } from "~/components/LoadingDots";
+import { Registration, RegistrationStatus } from "~/types/registration";
+
 import * as S from "./styles";
 import RegistrationCard, {
   EmptyStateRegistrationCard,
 } from "../RegistrationCard";
-import { LoadingDots } from "~/components/LoadingDots";
-import { Registration, RegistrationStatus } from "~/types/registration";
 
 interface ColumnProps {
   status: RegistrationStatus;

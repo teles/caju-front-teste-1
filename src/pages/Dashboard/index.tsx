@@ -1,7 +1,8 @@
-import Collumns from "./components/Columns";
-import * as S from "./styles";
-import { SearchBar } from "./components/Searchbar";
 import { useRegistrationContext } from "~/contexts/RegistrationContext";
+
+import Collumns from "./components/Columns";
+import { SearchBar } from "./components/Searchbar";
+import * as S from "./styles";
 
 const DashboardPage = () => {
   const { registrations, loading } = useRegistrationContext();

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
+
 import useRegistrations from "~/hooks/useRegistrations";
-import { Registration, RegistrationFilter } from "~/types/registration";
 import { ActionResponse } from "~/types/actionResponse";
+import { Registration, RegistrationFilter } from "~/types/registration";
 
 /**
  * Tipo de contexto para o contexto de registro.
