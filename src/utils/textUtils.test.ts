@@ -1,4 +1,4 @@
-import { removeNonNumeric } from "../utils/textUtils";
+import { convertDateSeparator, removeNonNumeric } from "../utils/textUtils";
 
 describe("removeNonNumeric", () => {
   it("should remove all non-numeric characters from the text", () => {
@@ -20,5 +20,11 @@ describe("removeNonNumeric", () => {
     const expected = "123456789";
     const result = removeNonNumeric(text);
     expect(result).toEqual(expected);
+  });
+
+  it("should convert hyphens to slashes in a date string", () => {
+    expect(convertDateSeparator("2014-10-10")).toBe("10/10/2014");
+    expect(convertDateSeparator("1988-07-28")).toBe("28/07/1988");
+    expect(convertDateSeparator("2024-08-10")).toBe("10/08/2024");
   });
 });

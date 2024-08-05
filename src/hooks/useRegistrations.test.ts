@@ -68,7 +68,7 @@ describe("useRegistrations", () => {
 
   it("should add a new registration successfully", async () => {
     const newRegistration = {
-      admissionDate: "2023-10-23",
+      admissionDate: "23/10/2023",
       email: "maria@caju.com.br",
       employeeName: "Maria Souza",
       status: "REVIEW" as Registration["status"],

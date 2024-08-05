@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 
 import { ActionResponse } from "~/types/actionResponse";
 import { Registration, RegistrationFilter } from "~/types/registration";
-import { removeNonNumeric } from "~/utils/textUtils";
+import { convertDateSeparator, removeNonNumeric } from "~/utils/textUtils";
 
 /**
  * Hook que gerencia as cadastros.
@@ -75,9 +75,14 @@ const useRegistrations = () => {
   const addRegistration = async (
     newRegistration: Omit<Registration, "id">,
   ): Promise<ActionResponse> => {
+    const formattedRegistration: Omit<Registration, "id"> = {
+      ...newRegistration,
+      cpf: removeNonNumeric(newRegistration.cpf),
+      admissionDate: convertDateSeparator(newRegistration.admissionDate),
+    };
     setLoading(true);
     try {
-      await axios.post(`${apiUrl}/registrations`, newRegistration);
+      await axios.post(`${apiUrl}/registrations`, formattedRegistration);
       await _refreshRegistrations();
       return {
         success: true,
