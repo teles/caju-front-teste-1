@@ -3,7 +3,7 @@
 Este é o repositório do projeto Caju Front Test. Aqui estão as instruções para configurar e executar o projeto, incluindo como rodar o banco de dados, o Storybook, os testes unitários e os testes E2E.
 
 > [!WARNING]
-> As instruções originais para o teste ainda estão presentes logo abaixo
+> As instruções originais para esse teste ainda [estão presentes logo abaixo](#instruções-originais)
 
 ## Pré-requisitos
 
