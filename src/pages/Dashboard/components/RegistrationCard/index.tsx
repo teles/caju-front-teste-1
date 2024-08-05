@@ -116,7 +116,7 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
 
   return (
     <>
-      <S.Card>
+      <S.Card data-testid="registration-card">
         <S.IconAndText>
           <HiOutlineUser />
           {isLoading ? (
@@ -147,12 +147,14 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
               <ButtonSmall
                 $bgcolor="rgb(255, 145, 154)"
                 onClick={handleReprovarClick}
+                aria-label="Reprovar"
               >
                 Reprovar {data?.status}
               </ButtonSmall>
               <ButtonSmall
                 $bgcolor="rgb(155, 229, 155)"
                 onClick={handleAprovarClick}
+                aria-label="Aprovar"
               >
                 Aprovar
               </ButtonSmall>
@@ -161,11 +163,12 @@ const RegistrationCard = ({ data, isLoading = false }: Props) => {
             <ButtonSmall
               $bgcolor="#ff8858"
               onClick={handleRevisarNovamenteClick}
+              aria-label="Revisar novamente"
             >
               Revisar novamente
             </ButtonSmall>
           )}
-          <HiOutlineTrash onClick={handleDeleteClick} />
+          <HiOutlineTrash onClick={handleDeleteClick} aria-label="Excluir" />
         </S.Actions>
       </S.Card>
       {modalContent && (

@@ -58,7 +58,7 @@ const TextField = ({ label, error, mask, ...props }: Props) => {
       ) : (
         <Input {...props} />
       )}
-      {error && <ErrorSpan>{error}</ErrorSpan>}
+      {error && <ErrorSpan aria-label="error-message">{error}</ErrorSpan>}
     </InputDiv>
   );
 };

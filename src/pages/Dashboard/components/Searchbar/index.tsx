@@ -56,6 +56,7 @@ export const SearchBar = () => {
         placeholder="Digite um CPF válido"
         mask={cpfMask}
         value={cpf}
+        name="cpf"
         onChange={handleCpfChange}
         error={cpfError}
       />
@@ -63,7 +64,12 @@ export const SearchBar = () => {
         <IconButton aria-label="refetch" onClick={handleRefresh}>
           <HiRefresh />
         </IconButton>
-        <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
+        <Button
+          onClick={() => goToNewAdmissionPage()}
+          aria-label="nova-admissao"
+        >
+          Nova Admissão
+        </Button>
       </S.Actions>
     </S.Container>
   );

@@ -9,12 +9,25 @@ import RegistrationCard, {
 interface ColumnProps {
   status: RegistrationStatus;
   title: string;
+  ariaLabel?: string;
 }
 
 const allColumns: ColumnProps[] = [
-  { status: RegistrationStatus.REVIEW, title: "Pronto para revisar" },
-  { status: RegistrationStatus.APPROVED, title: "Aprovado" },
-  { status: RegistrationStatus.REPROVED, title: "Reprovado" },
+  {
+    status: RegistrationStatus.REVIEW,
+    title: "Pronto para revisar",
+    ariaLabel: "review",
+  },
+  {
+    status: RegistrationStatus.APPROVED,
+    title: "Aprovado",
+    ariaLabel: "approved",
+  },
+  {
+    status: RegistrationStatus.REPROVED,
+    title: "Reprovado",
+    ariaLabel: "reproved",
+  },
 ];
 
 const filterByStatus = (status: RegistrationStatus) => {
@@ -33,7 +46,11 @@ const Collumns = ({ registrations, loading = false }: Props) => {
     <S.Container>
       {allColumns.map((collum) => {
         return (
-          <S.Column $status={collum.status} key={collum.title}>
+          <S.Column
+            $status={collum.status}
+            key={collum.title}
+            aria-label={collum.ariaLabel}
+          >
             <>
               <S.TitleColumn $status={collum.status}>
                 {collum.title}

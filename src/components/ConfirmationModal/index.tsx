@@ -62,10 +62,16 @@ const ConfirmationModal = ({
         <ModalTitle>{title}</ModalTitle>
         <ModalText>{text}</ModalText>
         <ModalActions>
-          <Button onClick={onRequestClose} $themeType="secondary">
+          <Button
+            onClick={onRequestClose}
+            $themeType="secondary"
+            aria-label="cancel"
+          >
             {cancelText}
           </Button>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <Button onClick={onConfirm} aria-label="confirm">
+            {confirmText}
+          </Button>
         </ModalActions>
       </ModalContent>
     </CustomModal>
