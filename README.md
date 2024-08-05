@@ -1,5 +1,86 @@
 # Caju Front End Teste
 
+Este é o repositório do projeto Caju Front Test. Aqui estão as instruções para configurar e executar o projeto, incluindo como rodar o banco de dados, o Storybook, os testes unitários e os testes E2E.
+
+> [!WARNING]
+> As instruções originais para o teste ainda estão presentes logo abaixo
+
+## Pré-requisitos
+
+- Node.js 20.x
+- Yarn
+- NVM (Node Version Manager)
+
+## Configuração do Projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/teles/caju-front-test.git
+cd caju-front-test
+```
+
+### 2. Instale dependências
+
+```bash
+nvm use # certifique-se de possuir o nvm instalado
+yarn install
+```
+
+### 3. Rode o banco de dados
+
+Para iniciar o banco de dados com JSON Server:
+
+```bash
+yarn init:db
+```
+
+### 4. Rode o projeto
+
+```bash
+yarn dev
+```
+
+O projeto estará disponível em http://localhost:3001.
+
+### 5. Rodar o Storybook
+
+Para rodar o Storybook, utilize o comando:
+
+```bash
+yarn storybook
+```
+
+### 6. Rode os testes unitários/integração
+
+```bash
+yarn test
+```
+
+Mantenha os testes rodando e observando alterações com o comando:
+
+```bash
+yarn test:dev
+```
+
+### 7. Rode os testes e2e cypress
+
+Certifique-se de que o servidor de desenvolvimento está rodando em http://localhost:3001.
+
+Para rodar os testes com interface do navegador:
+
+```bash
+yarn cypress open
+```
+
+Para rodar os testes na linha de comando (headless):
+
+```bash
+yarn cypress:run
+```
+
+## Instruções originais
+
 Esse é um teste para você demonstrar suas experiencia como front end, a aplicação basicamente se divide em duas telas, o `Dashboard` e um `Formulário`.
 Voce deverá criar uma plataforma de admissão que permita o usuario adicionar uma admissão com as opções de aprovar, reprovar ou excluir.
 
